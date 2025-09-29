@@ -27,5 +27,3 @@ Sistema de inteligencia artificial para clasificación de imágenes de perros y 
 • Merma Maxi Edison Alexis 
 • Quinta Quispe Katia Angela 
 
-## 📄 Licencia
-MIT License
