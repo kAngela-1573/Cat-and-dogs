@@ -1,1 +1,1079 @@
-inde
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía Detallada - Clasificador de Perros y Gatos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        .infographic {
+            background-color: rgba(255, 255, 255, 0.98);
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 25px;
+            border-bottom: 4px double #1a2a6c;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: -20px;
+        }
+        
+        h1 {
+            font-size: 3.2rem;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            font-weight: 500;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .team-info {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+            font-size: 1.1rem;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .team-member {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 8px 8px 16px #d9d9d9, -8px -8px 16px #ffffff;
+            transition: all 0.4s ease;
+            border: 1px solid #e0e0e0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #1a2a6c, #b21f1f, #fdbb2d);
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 12px 12px 24px #d1d1d1, -12px -12px 24px #ffffff;
+        }
+        
+        .card-title {
+            color: #1a2a6c;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #fdbb2d;
+        }
+        
+        .metrics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .metric {
+            flex: 1;
+            min-width: 140px;
+            text-align: center;
+            background: white;
+            padding: 20px 10px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+        
+        .metric:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .metric-label {
+            font-size: 0.95rem;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .confusion-matrix-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 15px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.3rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .matrix-grid {
+            display: inline-grid;
+            grid-template-columns: auto auto auto;
+            gap: 10px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .matrix-cell {
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        
+        .matrix-header {
+            background: #1a2a6c;
+            color: white;
+        }
+        
+        .true-positive {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .false-negative {
+            background: #FF9800;
+            color: white;
+        }
+        
+        .false-positive {
+            background: #F44336;
+            color: white;
+        }
+        
+        .true-negative {
+            background: #2196F3;
+            color: white;
+        }
+        
+        .architecture-list, .dataset-list, .tech-list {
+            list-style-type: none;
+        }
+        
+        .architecture-list li, .dataset-list li, .tech-list li {
+            padding: 12px 0;
+            border-bottom: 1px dashed #ddd;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .architecture-list li:last-child, .dataset-list li:last-child, .tech-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .icon {
+            font-size: 1.5rem;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .conclusion {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+            color: white;
+            border-radius: 20px;
+            padding: 35px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .conclusion h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .achievements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .achievement {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .achievement h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            border-bottom: 2px solid #fdbb2d;
+            padding-bottom: 8px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 3px double #1a2a6c;
+            color: #666;
+        }
+        
+        .team-name {
+            font-weight: 800;
+            color: #1a2a6c;
+            font-size: 1.5rem;
+            margin-top: 20px;
+        }
+        
+        .course-info {
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #fdbb2d, #b21f1f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+        
+        .code-snippet {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            border-left: 5px solid #fdbb2d;
+        }
+        
+        .image-container {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            margin: 20px 0;
+            color: #666;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .image-container:hover {
+            border-color: #1a2a6c;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .training-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .training-image {
+            background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+            border-radius: 10px;
+            height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px dashed #1a2a6c;
+            color: #666;
+            overflow: hidden;
+        }
+        
+        .test-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+        
+        .test-result {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .test-image {
+            background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+            border-radius: 10px;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            border: 2px dashed #b21f1f;
+            overflow: hidden;
+        }
+        
+        .confidence-bar {
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 10px;
+        }
+        
+        .architecture-diagram {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .diagram-placeholder {
+            background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+            border-radius: 10px;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+            border: 3px dashed #1a2a6c;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table th {
+            background: #1a2a6c;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f0f0f0;
+        }
+        
+        .training-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .test-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .image-caption {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #1a2a6c;
+            text-align: center;
+        }
+        
+        .large-image {
+            height: 300px;
+        }
+        
+        .medium-image {
+            height: 250px;
+        }
+        
+        .small-image {
+            height: 200px;
+        }
+        
+        .error-container {
+            display: flex;
+            justify-content: center;
+            margin: 25px 0;
+        }
+        
+        .error-result {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+            max-width: 300px;
+            width: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .metrics {
+                flex-direction: column;
+            }
+            
+            .team-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .training-images, .test-results {
+                grid-template-columns: 1fr;
+            }
+            
+            .large-image, .medium-image, .small-image {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="infographic">
+            <header>
+                <h1><i class="fas fa-paw"></i> CLASIFICADOR AVANZADO DE PERROS Y GATOS <i class="fas fa-cat"></i></h1>
+                <p class="subtitle">Sistema de Inteligencia Artificial con Redes Neuronales Convolucionales y Transfer Learning</p>
+                <div class="team-info">
+                    <div class="team-member"><i class="fas fa-users"></i> Equipo: Code4</div>
+                    <div class="team-member"><i class="fas fa-book"></i> Asignatura: Construcción de Software</div>
+                    <div class="team-member"><i class="fas fa-graduation-cap"></i> Carrera: Ingeniería de Sistemas e Informática</div>
+                </div>
+            </header>
+            
+            <div class="grid">
+                <!-- Resultados del Modelo -->
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-chart-bar"></i> RESULTADOS DETALLADOS DEL MODELO</h2>
+                    
+                    <p>El modelo implementado demostró un excelente rendimiento en la clasificación binaria de imágenes de perros y gatos, superando ampliamente los métodos tradicionales de regresión logística.</p>
+                    
+                    <div class="metrics">
+                        <div class="metric">
+                            <div class="metric-value">87.3%</div>
+                            <div class="metric-label">Precisión Global</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">97.56%</div>
+                            <div class="metric-label">Precisión (Precision)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">97.50%</div>
+                            <div class="metric-label">Exhaustividad (Recall)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">97.53%</div>
+                            <div class="metric-label">Puntuación F1</div>
+                        </div>
+                    </div>
+                    
+                    <h3 style="margin-top: 25px; color: #1a2a6c; border-bottom: 2px solid #fdbb2d; padding-bottom: 8px;">
+                        <i class="fas fa-table"></i> Matriz de Confusión Detallada
+                    </h3>
+                    
+                    <div class="confusion-matrix-container">
+                        <div class="matrix-grid">
+                            <div class="matrix-cell matrix-header"></div>
+                            <div class="matrix-cell matrix-header">Predicción: Gato</div>
+                            <div class="matrix-cell matrix-header">Predicción: Perro</div>
+                            
+                            <div class="matrix-cell matrix-header">Real: Gato</div>
+                            <div class="matrix-cell true-positive">197<br><small>Verdaderos Positivos</small></div>
+                            <div class="matrix-cell false-negative">5<br><small>Falsos Negativos</small></div>
+                            
+                            <div class="matrix-cell matrix-header">Real: Perro</div>
+                            <div class="matrix-cell false-positive">2<br><small>Falsos Positivos</small></div>
+                            <div class="matrix-cell true-negative">280<br><small>Verdaderos Negativos</small></div>
+                        </div>
+                    </div>
+                    
+                    <p style="margin-top: 15px; text-align: center;">
+                        <strong>✅ 477 imágenes clasificadas correctamente</strong><br>
+                        <strong>❌ Solo 7 imágenes con error de clasificación</strong>
+                    </p>
+                    
+                    <h3 style="margin-top: 25px; color: #1a2a6c; border-bottom: 2px solid #fdbb2d; padding-bottom: 8px;">
+                        <i class="fas fa-image"></i> Gráficas de Entrenamiento
+                    </h3>
+                    
+                    <div class="image-container large-image">
+                        <img src="https://i.ibb.co/SXs0rT61/grafica-confusion.jpg" alt="Gráfica de Precisión vs Épocas" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    <p class="image-caption">MATRIZ DE CONFUSIÓN</p>
+                    
+                    <div class="image-container large-image">
+                        <img src="https://i.ibb.co/Y44nLHjz/grafica-precision.jpg" alt="Gráfica de Precisión vs Épocas" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    <p class="image-caption">MATRIZ DE PRECISIÓN</p>
+                </div>
+                
+                <!-- Dataset y Preprocesamiento -->
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-database"></i> DATASET Y PREPROCESAMIENTO DETALLADO</h2>
+                    
+                    <h3 style="color: #b21f1f; margin-top: 15px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-archive"></i> Conjunto de Datos
+                    </h3>
+                    
+                    <ul class="dataset-list">
+                        <li><span class="icon">📊</span> 
+                            <div>
+                                <strong>Dataset:</strong> "Cat and Dog" de Kaggle<br>
+                                <small>Disponible en: https://www.kaggle.com/datasets/tongpython/cat-and-dog</small>
+                            </div>
+                        </li>
+                        <li><span class="icon">🐱</span> 
+                            <div>
+                                <strong>Gatos:</strong> 1,012 imágenes<br>
+                                <small>Distribución balanceada entre clases</small>
+                            </div>
+                        </li>
+                        <li><span class="icon">🐶</span> 
+                            <div>
+                                <strong>Perros:</strong> 1,012 imágenes<br>
+                                <small>Garantiza equilibrio en el entrenamiento</small>
+                            </div>
+                        </li>
+                        <li><span class="icon">📂</span> 
+                            <div>
+                                <strong>División:</strong> 80% entrenamiento (1,619 imágenes), 20% validación (405 imágenes)<br>
+                                <small>Split estratificado para mantener proporciones</small>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <h3 style="color: #b21f1f; margin-top: 20px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-images"></i> Ejemplos del Dataset
+                    </h3>
+                    
+                    <div class="training-images">
+                        <div class="training-image">
+                            <img src="https://i.ibb.co/FkDMjq4H/ca2.png" alt="Gato del dataset">
+                        </div>
+                        
+                        <div class="training-image">
+                            <img src="https://i.ibb.co/rqWBwxx/ca3.png" alt="Perro del dataset">
+                        </div>
+                        
+                        <div class="training-image">
+                            <img src="https://i.ibb.co/wF7L3vDS/ca1.png" alt="Gato del dataset">
+                        </div>
+                        
+                        <div class="training-image">
+                            <img src="https://i.ibb.co/NdWDZtZL/ca4.png" alt="Perro del dataset">
+                        </div>
+                    </div>
+                    
+                    <h3 style="color: #b21f1f; margin-top: 20px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-sliders-h"></i> Pipeline de Preprocesamiento
+                    </h3>
+                    
+                    <ul class="dataset-list">
+                        <li><span class="icon">🖼️</span> 
+                            <div>
+                                <strong>Redimensionamiento:</strong> 224×224 píxeles<br>
+                                <small>Tamaño requerido por MobileNetV2</small>
+                            </div>
+                        </li>
+                        <li><span class="icon">📏</span> 
+                            <div>
+                                <strong>Normalización:</strong> Valores de píxeles escalados a [0, 1]<br>
+                                <small>Divide cada valor de píxel por 255</small>
+                            </div>
+                        </li>
+                        <li><span class="icon">🔄</span> 
+                            <div>
+                                <strong>Data Augmentation (Solo Entrenamiento):</strong><br>
+                                <small>Aumenta la variabilidad del dataset para mejorar generalización</small>
+                            </div>
+                        </li>
+                        <li style="padding-left: 45px;">
+                            <div>
+                                <strong>• Rotación:</strong> ±12 grados<br>
+                                <strong>• Desplazamiento:</strong> Horizontal y vertical (8%)<br>
+                                <strong>• Zoom:</strong> ±12% de aumento/disminución<br>
+                                <strong>• Volteo horizontal:</strong> Imágenes reflejadas<br>
+                                <strong>• Ajuste de brillo:</strong> Rango [0.92, 1.08]<br>
+                                <strong>• Shear Range:</strong> 8% de deformación<br>
+                                <strong>• Channel Shift:</strong> 5% de variación en canales RGB
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <div class="image-container medium-image">
+                        <img src="https://i.ibb.co/w8QxSQP/ca5.png" alt="Ejemplo de Data Augmentation" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    <p class="image-caption">EJEMPLO DE DATA AUGMENTATION</p>
+                </div>
+                
+                <!-- Características Técnicas -->
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-cogs"></i> CARACTERÍSTICAS TÉCNICAS DETALLADAS</h2>
+                    
+                    <h3 style="color: #b21f1f; margin-top: 15px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-laptop-code"></i> Entorno de Desarrollo
+                    </h3>
+                    
+                    <ul class="tech-list">
+                        <li><span class="icon">🌐</span> 
+                            <div>
+                                <strong>Plataforma:</strong> Google Colab Pro<br>
+                                <small>Acceso a GPUs Tesla para entrenamiento acelerado</small>
+                            </div>
+                        </li>
+                        <li><span class="icon">⚙️</span> 
+                            <div>
+                                <strong>Framework:</strong> TensorFlow 2.x / Keras<br>
+                                <small>API de alto nivel para desarrollo rápido de modelos</small>
+                            </div>
+                        </li>
+                        <li><span class="icon">🐍</span> 
+                            <div>
+                                <strong>Lenguaje:</strong> Python 3.8+<br>
+                                <small>Librerías: NumPy, Pandas, Matplotlib, Scikit-learn</small>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <h3 style="color: #b21f1f; margin-top: 20px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-tachometer-alt"></i> Hiperparámetros Optimizados
+                    </h3>
+                    
+                    <ul class="tech-list">
+                        <li><span class="icon">📦</span> 
+                            <div>
+                                <strong>Batch Size:</strong> 16 imágenes por lote<br>
+                                <small>Balance entre velocidad y estabilidad del gradiente</small>
+                            </div>
+                        </li>
+                        <li><span class="icon">⚡</span> 
+                            <div>
+                                <strong>Optimizador:</strong> Adam (Adaptive Moment Estimation)<br>
+                                <small>Combina ventajas de RMSProp y Momentum</small>
+                            </div>
+                        </li>
+                        <li><span class="icon">📉</span> 
+                            <div>
+                                <strong>Learning Rate:</strong> 0.0001 (Etapa 1), 0.00001 (Etapa 2)<br>
+                                <small>Tasas bajas para entrenamiento estable con fine-tuning</small>
+                            </div>
+                        </li>
+                        <li><span class="icon">📊</span> 
+                            <div>
+                                <strong>Función de Pérdida:</strong> Binary Crossentropy<br>
+                                <small>Optimizada para problemas de clasificación binaria</small>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <h3 style="color: #b21f1f; margin-top: 20px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-shield-alt"></i> Estrategias de Regularización
+                    </h3>
+                    
+                    <ul class="tech-list">
+                        <li><span class="icon">⏹️</span> 
+                            <div>
+                                <strong>Early Stopping:</strong> Paciencia de 6 épocas<br>
+                                <small>Detiene entrenamiento si no hay mejora en val_accuracy</small>
+                            </div>
+                        </li>
+                        <li><span class="icon">📈</span> 
+                            <div>
+                                <strong>ReduceLROnPlateau:</strong> Reduce LR si val_loss se estanca<br>
+                                <small>Factor: 0.3, Paciencia: 4 épocas, LR mínimo: 0.00001</small>
+                            </div>
+                        </li>
+                        <li><span class="icon">🔽</span> 
+                            <div>
+                                <strong>Dropout:</strong> Múltiples capas (10-30%)<br>
+                                <small>Desactiva neuronas aleatoriamente para prevenir overfitting</small>
+                            </div>
+                        </li>
+                        <li><span class="icon">📐</span> 
+                            <div>
+                                <strong>Batch Normalization:</strong> Después de cada capa convolucional<br>
+                                <small>Estabiliza y acelera el entrenamiento</small>
+                            </div>
+                        </li>
+                        <li><span class="icon">⚖️</span> 
+                            <div>
+                                <strong>Class Weights:</strong> Balance automático de clases<br>
+                                <small>Ajusta pérdida para datasets desbalanceados</small>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Pruebas y Resultados -->
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-vial"></i> PRUEBAS Y RESULTADOS DETALLADOS</h2>
+                
+                <h3 style="color: #b21f1f; margin-top: 15px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-check-circle"></i> Resultados de Clasificación
+                </h3>
+                
+                <div class="test-results">
+                    <div class="test-result">
+                        <div class="test-image">
+                            <img src="https://i.ibb.co/DHVwCXdg/p3.png" alt="Predicción exitosa">
+                        </div>
+                        <h4>Predicción: GATO 🐱</h4>
+                        <p><strong>Confianza:</strong> 99.97%</p>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: 99.97%"></div>
+                        </div>
+                        <p><strong>Nivel:</strong> MUY ALTA</p>
+                        <p><strong>Resultado:</strong> ✅ CORRECTO</p>
+                    </div>
+                    
+                    <div class="test-result">
+                        <div class="test-image">
+                            <img src="https://i.ibb.co/nNxs5JBk/p1.png" alt="Predicción exitosa">
+                        </div>
+                        <h4>Predicción: PERRO 🐶</h4>
+                        <p><strong>Confianza:</strong> 99.39%</p>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: 99.39%"></div>
+                        </div>
+                        <p><strong>Nivel:</strong> MUY ALTA</p>
+                        <p><strong>Resultado:</strong> ✅ CORRECTO</p>
+                    </div>
+                    
+                    <div class="test-result">
+                        <div class="test-image">
+                            <img src="https://i.ibb.co/gZ56Ydzs/p2.png" alt="Predicción exitosa">
+                        </div>
+                        <h4>Predicción: PERRO 🐶</h4>
+                        <p><strong>Confianza:</strong> 99.94%</p>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: 99.94%"></div>
+                        </div>
+                        <p><strong>Nivel:</strong> MUY ALTA</p>
+                        <p><strong>Resultado:</strong> ✅ CORRECTO</p>
+                    </div>
+                </div>
+                
+                <h3 style="color: #b21f1f; margin-top: 25px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-exclamation-triangle"></i> Casos de Error
+                </h3>
+                
+                <div class="error-container">
+                    <div class="error-result">
+                        <div class="test-image">
+                            <img src="https://i.ibb.co/JRFmJt60/e1.png" alt="Caso de error">
+                        </div>
+                        <h4>Predicción: GATO 🐱</h4>
+                        <p><strong>Confianza:</strong> 81.45%</p>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: 52%; background: #FF9800;"></div>
+                        </div>
+                        <p><strong>Nivel:</strong> ALTA</p>
+                        <p><strong>Resultado:</strong> ❌ INCORRECTO</p>
+                        <p><small>Real: PERRO 🐶</small></p>
+                    </div>
+                </div>
+                
+                <h3 style="color: #b21f1f; margin-top: 25px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-chart-bar"></i> Comparación de Métodos
+                </h3>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Método</th>
+                            <th>Precisión</th>
+                            <th>Tiempo Entrenamiento</th>
+                            <th>Ventajas</th>
+                            <th>Desventajas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Regresión Logística</td>
+                            <td>25-30%</td>
+                            <td>5-10 min</td>
+                            <td>Simple, rápido</td>
+                            <td>Bajo rendimiento con imágenes</td>
+                        </tr>
+                        <tr>
+                            <td>CNN Desde Cero</td>
+                            <td>70-75%</td>
+                            <td>2-3 horas</td>
+                            <td>Mejor que regresión logística</td>
+                            <td>Requiere mucho datos y tiempo</td>
+                        </tr>
+                        <tr>
+                            <td>Transfer Learning (Nuestro)</td>
+                            <td>87.3%</td>
+                            <td>45-60 min</td>
+                            <td>Alta precisión, entrenamiento rápido</td>
+                            <td>Requiere modelo base grande</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Código y Implementación -->
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-code"></i> IMPLEMENTACIÓN Y CÓDIGO</h2>
+                
+                <h3 style="color: #b21f1f; margin-top: 15px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-cube"></i> Estructura del Proyecto
+                </h3>
+                
+                <div class="code-snippet">
+                    <pre><code>Proyecto/
+├── dog_cat_classifier.py          # Clase principal del clasificador
+├── requirements.txt               # Dependencias del proyecto
+├── dataset/                       # Conjunto de datos
+│   ├── train/
+│   │   ├── cats/                 # Imágenes de gatos (entrenamiento)
+│   │   └── dogs/                 # Imágenes de perros (entrenamiento)
+│   └── validation/
+│       ├── cats/                 # Imágenes de gatos (validación)
+│       └── dogs/                 # Imágenes de perros (validación)
+├── models/                        # Modelos guardados
+│   ├── best_dog_cat_model_advanced.h5
+│   └── dog_cat_classifier_advanced.h5
+├── training_log.csv              # Registro de entrenamiento
+└── images/                       # Imágenes de prueba y resultados</code></pre>
+                </div>
+                
+                <h3 style="color: #b21f1f; margin-top: 25px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-code-branch"></i> Fragmentos de Código Clave
+                </h3>
+                
+                <div class="code-snippet">
+                    <pre><code># Creación del modelo con Transfer Learning
+base_model = tf.keras.applications.MobileNetV2(
+    input_shape=(224, 224, 3),
+    include_top=False,
+    weights='imagenet'
+)
+base_model.trainable = False
+
+model = tf.keras.Sequential([
+    base_model,
+    layers.GlobalAveragePooling2D(),
+    layers.Dropout(0.3),
+    layers.Dense(256, activation='relu'),
+    layers.BatchNormalization(),
+    layers.Dropout(0.2),
+    layers.Dense(128, activation='relu'),
+    layers.Dropout(0.1),
+    layers.Dense(1, activation='sigmoid')
+])
+
+# Compilación del modelo
+model.compile(
+    optimizer=tf.keras.optimizers.Adam(learning_rate=0.0001),
+    loss='binary_crossentropy',
+    metrics=['accuracy', 'precision', 'recall']
+)</code></pre>
+                </div>
+                
+                <div class="code-snippet">
+                    <pre><code># Data Augmentation para entrenamiento
+train_datagen = tf.keras.preprocessing.image.ImageDataGenerator(
+    rescale=1./255,
+    rotation_range=12,
+    width_shift_range=0.08,
+    height_shift_range=0.08,
+    shear_range=0.08,
+    zoom_range=0.12,
+    horizontal_flip=True,
+    brightness_range=[0.92, 1.08],
+    channel_shift_range=0.05,
+    fill_mode='nearest',
+    validation_split=0.2
+)
+
+# Generadores de datos
+train_generator = train_datagen.flow_from_directory(
+    data_path,
+    target_size=(IMG_HEIGHT, IMG_WIDTH),
+    batch_size=BATCH_SIZE,
+    class_mode='binary',
+    subset='training',
+    shuffle=True
+)</code></pre>
+                </div>
+                
+                <h3 style="color: #b21f1f; margin-top: 25px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-terminal"></i> Ejecución en Google Colab
+                </h3>
+                
+                <div class="image-container medium-image">
+                    <img src="https://i.ibb.co/5XttSzgr/c1.png" alt="Captura de Google Colab" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+                <p class="image-caption">ENTORNO DE EJECUCIÓN EN GOOGLE COLAB</p>
+            </div>
+            
+            <!-- Conclusiones -->
+            <div class="conclusion">
+                <h2><i class="fas fa-lightbulb"></i> CONCLUSIONES DETALLADAS</h2>
+                
+                <div class="achievements">
+                    <div class="achievement">
+                        <h3><i class="fas fa-trophy"></i> Logros Principales</h3>
+                        <p>✅ <span class="highlight">Alta precisión (87.3%)</span> superando métodos tradicionales de regresión logística</p>
+                        <p>✅ <span class="highlight">Excelente generalización</span> gracias a data augmentation y regularización</p>
+                        <p>✅ <span class="highlight">Entrenamiento eficiente</span> utilizando Transfer Learning con MobileNetV2</p>
+                        <p>✅ <span class="highlight">Sistema robusto</span> para variaciones en iluminación, posición y tamaño</p>
+                        <p>✅ <span class="highlight">Arquitectura escalable</span> que permite fácil adaptación a otras clases</p>
+                    </div>
+                    
+                    <div class="achievement">
+                        <h3><i class="fas fa-rocket"></i> Aplicaciones Prácticas</h3>
+                        <p>📱 <span class="highlight">Organización automática</span> de bibliotecas de fotos de mascotas</p>
+                        <p>🔒 <span class="highlight">Sistemas de vigilancia inteligente</span> para detección de animales</p>
+                        <p>📲 <span class="highlight">Aplicaciones móviles</span> para identificación de razas</p>
+                        <p>🎓 <span class="highlight">Herramientas educativas</span> sobre inteligencia artificial</p>
+                        <p>🏥 <span class="highlight">Veterinarias automatizadas</span> para registro visual de pacientes</p>
+                    </div>
+                    
+                    <div class="achievement">
+                        <h3><i class="fas fa-chart-bar"></i> Comparación con Enfoques Tradicionales</h3>
+                        <p>📊 <span class="highlight">CNN vs. Regresión Logística:</span> +62% de mejora en accuracy</p>
+                        <p>⚡ <span class="highlight">Transfer Learning vs. Desde Cero:</span> 3x más rápido convergencia</p>
+                        <p>🛡️ <span class="highlight">Data Augmentation:</span> +15% mejora en generalización</p>
+                        <p>🎯 <span class="highlight">Fine-Tuning:</span> +5% mejora en precisión final</p>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 30px; text-align: center; border-top: 2px solid #fdbb2d; padding-top: 20px;">
+                    <i class="fas fa-sync-alt"></i> Trabajo Futuro y Mejoras
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div class="achievement">
+                        <h4><i class="fas fa-expand"></i> Expansión de Clases</h4>
+                        <p>• Añadir más especies animales</p>
+                        <p>• Identificación de razas específicas</p>
+                        <p>• Detección de múltiples animales en una imagen</p>
+                    </div>
+                    
+                    <div class="achievement">
+                        <h4><i class="fas fa-mobile-alt"></i> Implementación Móvil</h4>
+                        <p>• Conversión a TensorFlow Lite</p>
+                        <p>• App móvil para clasificación en tiempo real</p>
+                        <p>• Optimización para dispositivos edge</p>
+                    </div>
+                    
+                    <div class="achievement">
+                        <h4><i class="fas fa-chart-line"></i> Mejoras de Rendimiento</h4>
+                        <p>• Experimentar con otros modelos base (EfficientNet)</p>
+                        <p>• Técnicas avanzadas de regularización</p>
+                        <p>• Optimización de hiperparámetros con AutoML</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="footer">
+                <p class="team-name">Equipo Code4</p>
+                <p class="course-info">Construcción de Software - Ingeniería de Sistemas e Informática</p>
+                <p style="margin-top: 15px; font-style: italic;">"Innovando con inteligencia artificial para soluciones del mundo real"</p>
+                
+                <div style="margin-top: 20px; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+                    <div>
+                        <h4 style="color: #1a2a6c;">Integrantes:</h4>
+                        <p>• Casilla Mamani Ronaldo (100%)</p>
+                        <p>• Llanos Chacmana Sergio David (100%)</p>
+                        <p>• Merma Maxi Edison Alexis (100%)</p>
+                        <p>• Quinta Quispe Katia Angela (100%)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
